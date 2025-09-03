@@ -4,7 +4,6 @@ import { authenticateRequest, requireAuth } from "../mcp/utils";
 import { orders, users } from "../mcp/mock-data";
 import { MCPTool } from "@mastra/mcp";
 
-
 const AccountHealthInput = z.object({
   segment: z.enum(["all", "inactive", "highValue"]).default("all"),
   windowDays: z.number().int().positive().max(365).default(90),
@@ -147,10 +146,6 @@ export const computeAccountHealthTool = createTool({
   }),
   // @ts-expect-error TODO MCPTool type is not compatible with createTool
   execute: (async (context, options) => {
-
-    console.log("context-compute-account-health", context);
-    console.log("options-compute-account-health", options);
-
     try {
       const auth = authenticateRequest(options);
       requireAuth(auth, "read:users");

@@ -82,7 +82,7 @@ pnpm workshop-demo-http
 
 ### 5-20 min: Live Build - Customer Analytics Server
 
-- **Demo server**: 2 tools + 1 resource  
+- **Demo server**: 2 tools + 1 resource
 - **Multi-system workflows**: Database + external API integration
 - **Business logic**: Customer health scoring and risk analysis
 - **Safe by design**: Read-only with built-in guardrails
@@ -189,21 +189,23 @@ const handleRequest = async (req, res) => {
 
   if (!authInfo) {
     res.writeHead(401, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ 
-      error: "Authentication required",
-      message: "Please provide a valid Authorization header" 
-    }));
+    res.end(
+      JSON.stringify({
+        error: "Authentication required",
+        message: "Please provide a valid Authorization header",
+      }),
+    );
     return;
   }
 
   // Attach MCP-compliant auth to request
   (req as any).auth = authInfo;
 
-  await server.startHTTP({ 
-    url: new URL(`http://localhost:${PORT}`), 
-    httpPath: "/mcp", 
-    req, 
-    res 
+  await server.startHTTP({
+    url: new URL(`http://localhost:${PORT}`),
+    httpPath: "/mcp",
+    req,
+    res,
   });
 };
 ```
@@ -399,7 +401,6 @@ const MODELS_TO_TEST = [
   // Add your preferred models
 ];
 ```
-
 
 ## 🎯 Key Takeaways
 

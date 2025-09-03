@@ -97,10 +97,7 @@ export const runSqlTool = createTool({
     }),
   }),
   // @ts-expect-error TODO MCPTool type is not compatible with createTool
-    execute: (async (context, options) => {
-      console.log("context-sql-tool", context);
-      console.log("options-sql-tool", options);
-
+  execute: (async (context, options) => {
     try {
       let { sql, limit } = context.context;
 

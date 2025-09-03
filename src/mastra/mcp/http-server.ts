@@ -86,7 +86,9 @@ function authenticateRequest(req: http.IncomingMessage): AuthInfo | null {
     const user = mockJWTUsers[token];
     if (user) {
       const userInfo = user.extra as unknown as DemoUserInfo;
-      console.log(`[Auth] JWT authenticated: ${userInfo.username} (${userInfo.role})`);
+      console.log(
+        `[Auth] JWT authenticated: ${userInfo.username} (${userInfo.role})`,
+      );
       return user;
     }
     console.log(`[Auth] Invalid JWT token: ${token}`);
