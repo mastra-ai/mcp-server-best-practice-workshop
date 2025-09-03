@@ -1,0 +1,46 @@
+{
+  "name": "mcp-server-workshop-best-practices",
+  "version": "1.0.0",
+  "description": "Workshop demonstrating Customer Analytics MCP server with multi-system workflows using Mastra",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "mastra dev",
+    "build": "mastra build",
+    "start": "mastra start",
+    "mcp-server": "tsx src/mastra/mcp/server.ts",
+    "mcp-http-server": "tsx src/mastra/mcp/http-server.ts",
+    "workshop-demo": "tsx src/workshop-demo.ts",
+    "workshop-demo-http": "tsx src/workshop-demo-http.ts",
+    "setup-check": "tsx src/setup-check.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@mastra/mcp": "link:../mastra2/packages/mcp",
+      "@mastra/core": "link:../mastra2/packages/core",
+      "@mastra/schema-compat": "link:../mastra2/packages/schema-compat"
+    }
+  },
+  "packageManager": "pnpm@10.12.4+sha512.5ea8b0deed94ed68691c9bad4c955492705c5eeb8a87ef86bc62c74a26b037b08ff9570f108b2e4dbd1dd1a9186fea925e527f141c648e85af45631074680184",
+  "dependencies": {
+    "@ai-sdk/openai": "^2.0.23",
+    "@mastra/core": "^0.15.2",
+    "@mastra/loggers": "^0.10.9",
+    "@mastra/mcp": "^0.11.2",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "mastra": "^0.11.2",
+    "prettier": "^3.6.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.2"
+  }
+}
