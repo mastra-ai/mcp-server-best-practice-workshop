@@ -86,7 +86,9 @@ function authenticateRequest(req: http.IncomingMessage): AuthInfo | null {
     const user = mockJWTUsers[token];
     if (user) {
       const userInfo = user.extra as unknown as DemoUserInfo;
-      console.log(`[Auth] JWT authenticated: ${userInfo.username} (${userInfo.role})`);
+      console.log(
+        `[Auth] JWT authenticated: ${userInfo.username} (${userInfo.role})`,
+      );
       return user;
     }
     console.log(`[Auth] Invalid JWT token: ${token}`);
@@ -169,28 +171,6 @@ async function handleRequest(
   // MCP endpoint
   if (url.pathname === "/mcp") {
     try {
-      // Authenticate the request
-      const authInfo = authenticateRequest(req);
-
-      if (!authInfo) {
-        res.writeHead(401, { "Content-Type": "application/json" });
-        res.end(
-          JSON.stringify({
-            error: "Authentication required",
-            message:
-              "Provide Authorization header with valid API key or JWT token",
-            examples: {
-              apiKey: "Authorization: ApiKey sk-user-987654321",
-              jwt: "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.user",
-            },
-          }),
-        );
-        return;
-      }
-
-      // Attach auth info to request for MCP server
-      (req as any).auth = authInfo;
-
       // Start MCP server with HTTP transport
       await server.startHTTP({
         url,
@@ -200,12 +180,6 @@ async function handleRequest(
         options: {
           sessionIdGenerator: () =>
             `session-${Date.now()}-${Math.random().toString(36).slice(2)}`,
-          onsessioninitialized: (sessionId: string) => {
-            const userInfo = authInfo.extra as unknown as DemoUserInfo;
-            console.log(
-              `[MCP] New session initialized: ${sessionId} for user: ${userInfo?.username}`,
-            );
-          },
         },
       });
     } catch (error) {

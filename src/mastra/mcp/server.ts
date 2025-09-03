@@ -22,7 +22,9 @@ const server = new MCPServer({
 const main = async () => {
   const transport = process.env.MCP_TRANSPORT || "stdio";
 
-  console.error(`Starting Customer Analytics MCP Server v0.5.0 via ${transport}`);
+  console.error(
+    `Starting Customer Analytics MCP Server v0.5.0 via ${transport}`,
+  );
   console.error(
     "Purpose: Customer health analysis with multi-system data integration",
   );

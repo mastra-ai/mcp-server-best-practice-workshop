@@ -4,7 +4,6 @@ import { authenticateRequest, requireAuth } from "../mcp/utils";
 import { orders, users } from "../mcp/mock-data";
 import { MCPTool } from "@mastra/mcp";
 
-
 const AccountHealthInput = z.object({
   segment: z.enum(["all", "inactive", "highValue"]).default("all"),
   windowDays: z.number().int().positive().max(365).default(90),
@@ -147,19 +146,9 @@ export const computeAccountHealthTool = createTool({
   }),
   // @ts-expect-error TODO MCPTool type is not compatible with createTool
   execute: (async (context, options) => {
-
-    console.log("context-compute-account-health", context);
-    console.log("options-compute-account-health", options);
-
     try {
-      const auth = authenticateRequest(options);
-      requireAuth(auth, "read:users");
-
       const { segment, windowDays, limit, includeReasons } = context.context;
 
-      console.error(
-        `[compute_account_health] Authenticated as: ${auth.user?.username} (${auth.user?.role})`,
-      );
       console.error(
         `[compute_account_health] Analyzing segment: ${segment}, window: ${windowDays} days, limit: ${limit}`,
       );
@@ -278,10 +267,8 @@ export const computeAccountHealthTool = createTool({
           a.accountId.localeCompare(b.accountId),
       );
 
-      // Apply role-based limits
-      const roleLimit =
-        auth.user?.role === "readonly" ? Math.min(limit, 10) : limit;
-      const finalResults = scored.slice(0, roleLimit);
+      // Apply limit
+      const finalResults = scored.slice(0, limit);
 
       // Step 6: Generate summary statistics
       const segmentBreakdown = finalResults.reduce(

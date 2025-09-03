@@ -13,7 +13,7 @@ export type ToolExecutionOptions = ToolExecuteOptions;
 
 // --- Authentication Types ---
 // Using the official MCP AuthInfo type from MCPRequestHandlerExtra
-export type AuthInfo = MCPRequestHandlerExtra['authInfo'];
+export type AuthInfo = MCPRequestHandlerExtra["authInfo"];
 
 // Extended user info for our demo (stored in extra)
 export interface DemoUserInfo {
@@ -72,7 +72,7 @@ export function authenticateRequest(options?: ToolExecuteOptions): AuthContext {
   if (options?.extra?.authInfo) {
     const authInfo = options.extra.authInfo;
     const userInfo = authInfo?.extra as unknown as DemoUserInfo;
-    
+
     console.error(
       `[Auth] HTTP context auth: ${userInfo?.username} (${userInfo?.role})`,
     );
@@ -90,7 +90,9 @@ export function authenticateRequest(options?: ToolExecuteOptions): AuthContext {
 
   if (authInfo) {
     const userInfo = authInfo.extra as unknown as DemoUserInfo;
-    console.error(`[Auth] Environment auth: ${userInfo?.username} (${userInfo?.role})`);
+    console.error(
+      `[Auth] Environment auth: ${userInfo?.username} (${userInfo?.role})`,
+    );
     return {
       isAuthenticated: true,
       authInfo,

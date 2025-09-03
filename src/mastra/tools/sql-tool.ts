@@ -97,16 +97,9 @@ export const runSqlTool = createTool({
     }),
   }),
   // @ts-expect-error TODO MCPTool type is not compatible with createTool
-    execute: (async (context, options) => {
-      console.log("context-sql-tool", context);
-      console.log("options-sql-tool", options);
-
+  execute: (async (context, options) => {
     try {
       let { sql, limit } = context.context;
-
-      // Authentication and authorization
-      const auth = authenticateRequest(options);
-      requireAuth(auth);
 
       // Check specific permissions based on query
       const parsed = parseSQL(sql);
@@ -114,18 +107,12 @@ export const runSqlTool = createTool({
 
       if (parsed.table === "orders" || sql.toLowerCase().includes("orders")) {
         requiredPermission = "read:orders";
-        requireAuth(auth, requiredPermission);
       } else if (
         sql.toLowerCase().includes("join") ||
         sql.toLowerCase().includes("orders")
       ) {
         requiredPermission = "read:orders";
-        requireAuth(auth, requiredPermission);
       }
-
-      console.error(
-        `[run_sql] User: ${auth.user?.username}, Permission: ${requiredPermission}, Query: ${sql.slice(0, 50)}...`,
-      );
 
       // Guardrails: SELECT-only + implicit LIMIT
       if (!/^\s*select/i.test(sql)) {
@@ -140,11 +127,6 @@ export const runSqlTool = createTool({
       let effectiveLimit = limit;
       let filteredByRole = false;
 
-      if (auth.user?.role === "readonly") {
-        effectiveLimit = Math.min(limit, 10); // Readonly users get max 10 rows
-        filteredByRole = true;
-      }
-
       // Execute the query using our in-memory data
       try {
         const rows = executeQuery(sql, effectiveLimit);
@@ -153,7 +135,7 @@ export const runSqlTool = createTool({
           rows,
           rowCount: rows.length,
           metadata: {
-            executedBy: auth.user?.username || "unknown",
+            executedBy: "unknown",
             permission: requiredPermission,
             filteredByRole,
           },
@@ -164,7 +146,7 @@ export const runSqlTool = createTool({
           rows: [],
           rowCount: 0,
           metadata: {
-            executedBy: auth.user?.username || "unknown",
+            executedBy: "unknown",
             permission: requiredPermission,
             filteredByRole,
             error: error instanceof Error ? error.message : String(error),

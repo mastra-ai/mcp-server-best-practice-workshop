@@ -9,5 +9,5 @@ export const mastra = new Mastra({
   }),
   mcpServers: {
     customerAnalytics: server,
-  }
+  },
 });
