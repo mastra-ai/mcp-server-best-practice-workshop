@@ -19,7 +19,6 @@ A hands-on workshop demonstrating MCP (Model Context Protocol) best practices us
 - 🔄 **Workflow Patterns**: External API integration, data fusion, scoring algorithms
 - 🛡️ **Built-in Safety**: SELECT-only, implicit LIMIT, parsed queries, API rate limits
 - 🔐 **Authentication**: Transparent role-based access control (admin/user/readonly)
-- 💾 **Zero Dependencies**: Pure in-memory demo data (no database required)
 
 ## 🚀 Quick Start
 
@@ -43,24 +42,6 @@ cd mcp-server-workshop-best-practices
 pnpm install
 ```
 
-### Run the Demo
-
-**Option 1: Stdio Transport (Simple)**
-
-```bash
-# Terminal 1: Start MCP server (stdio)
-pnpm mcp-server
-
-# Terminal 2: Run workshop demo
-pnpm workshop-demo
-
-# Optional: Test with different auth levels
-DEMO_API_KEY=api_key_admin_123 pnpm mcp-server     # Admin access
-DEMO_API_KEY=api_key_readonly_789 pnpm mcp-server  # Readonly access
-```
-
-**Option 2: HTTP Transport (Production-Ready)**
-
 ```bash
 # Terminal 1: Start HTTP MCP server with real auth
 pnpm mcp-http-server
@@ -72,32 +53,6 @@ pnpm workshop-demo-http
 # - /mcp (MCP endpoint with auth)
 # - /health (health check)
 ```
-
-## 📚 Workshop Structure (40 minutes)
-
-### 0-5 min: Why MCP + Principles
-
-- Fewer tools, workflow-shaped, model compatibility
-- Exploration over brittle API wrappers
-
-### 5-20 min: Live Build - Customer Analytics Server
-
-- **Demo server**: 2 tools + 1 resource
-- **Multi-system workflows**: Database + external API integration
-- **Business logic**: Customer health scoring and risk analysis
-- **Safe by design**: Read-only with built-in guardrails
-
-### 20-30 min: Prove Model Compatibility
-
-- Test same task with 2-3 different models
-- Track: tool selection, arg validity, result shape
-
-### 30-36 min: Patterns & Pitfalls
-
-- Error handling, rate limits, timeouts, versioning
-
-### 36-40 min: Q&A + Checklist Hand-off
-
 ## 🛠️ Technical Deep Dive
 
 ### MCP Server Implementation
