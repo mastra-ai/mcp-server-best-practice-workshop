@@ -4,11 +4,16 @@
 import { MCPServer } from "@mastra/mcp";
 import resourceHandlers from "./resources";
 import { computeAccountHealthTool, runSqlTool } from "../tools";
+import { readFileSync } from "fs";
+import path from "node:path";
+
+// Read version from package.json
+const version = JSON.parse(readFileSync(path.resolve(process.cwd(), 'package.json'), 'utf8')).version;
 
 // --- Create and configure the MCP server ---
 const server = new MCPServer({
   name: "customer-analytics",
-  version: "0.5.0",
+  version,
   description:
     "Customer analytics MCP server with multi-system workflows: database queries, health scoring, and external data integration",
   tools: {
@@ -20,10 +25,11 @@ const server = new MCPServer({
 
 // --- Start server based on transport type ---
 const main = async () => {
+
   const transport = process.env.MCP_TRANSPORT || "stdio";
 
   console.error(
-    `Starting Customer Analytics MCP Server v0.5.0 via ${transport}`,
+    `Starting Customer Analytics MCP Server v${version} via ${transport}`,
   );
   console.error(
     "Purpose: Customer health analysis with multi-system data integration",
