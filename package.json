@@ -10,8 +10,7 @@
     "start": "mastra start",
     "mcp-server": "tsx src/mastra/mcp/server.ts",
     "mcp-http-server": "tsx src/mastra/mcp/http-server.ts",
-    "workshop-demo-http": "tsx src/workshop-demo-http.ts",
-    "setup-check": "tsx src/setup-check.ts"
+    "workshop-demo-http": "tsx src/workshop-demo-http.ts"
   },
   "keywords": [],
   "author": "",
