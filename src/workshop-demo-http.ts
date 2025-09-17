@@ -1,6 +1,6 @@
 // HTTP Workshop Demo: Customer Analytics MCP + Real Authentication
 // Demonstrates production-ready HTTP MCP with JWT/API key authentication
-
+import 'dotenv/config'
 import { Agent } from "@mastra/core/agent";
 import { MCPClient } from "@mastra/mcp";
 import { openai } from "@ai-sdk/openai";
