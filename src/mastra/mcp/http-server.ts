@@ -228,7 +228,7 @@ async function handleRequest(
   res.end(
     JSON.stringify({
       error: "Not found",
-      availableEndpoints: ["/health", "/auth/info", "/mcp"],
+      availableEndpoints: ["/health", "/mcp"],
     }),
   );
 }
