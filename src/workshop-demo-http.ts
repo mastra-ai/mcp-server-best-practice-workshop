@@ -349,7 +349,6 @@ async function main() {
     });
 
     console.log("\n🎉 HTTP Workshop completed successfully!");
-    console.log('OPENAI_API_KEY',process.env.OPENAI_API_KEY)
     console.log(
       "Next steps: Deploy this pattern to production with real JWT validation",
     );
